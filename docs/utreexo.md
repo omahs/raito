@@ -30,17 +30,17 @@ Although the new scheme is more memory consuming it has several advantages:
 
 ### Node positions
 
-Another important implementation detail that will help with understanding is how nodes positions are calculated. In short, the current pollard is extended to the nearest perfect binary tree (i.e. the bottom most row length is power of two) and then we go row by row bottom up, enumerating both the existing and virtual nodes.
+Another important implementation detail that will help with understanding is how nodes positions are calculated. In short, the current rd is extended to the nearest perfect binary tree (i.e. the bottom most row length is power of two) and then we go row by row bottom up, enumerating both the existing and virtual nodes.
 
 <p align="center" width="100%">
   <img src="./img/utreexo_positions.svg" alt=""/>
 </p>
 
-This allows more convenient navigation through the pollard and some bit tricks.
+This allows more convenient navigation through the rd and some bit tricks.
 
 ## Stump
 
-Stump is the "light" version of Utreexo accumulator that contains the minimal necessary data required to verify inclusion proofs and add/remove leaves. It is not sufficient to generate proofs though — for that you need the full pollard, which is quite large.  
+Stump is the "light" version of Utreexo accumulator that contains the minimal necessary data required to verify inclusion proofs and add/remove leaves. It is not sufficient to generate proofs though — for that you need the full rd, which is quite large.  
 Stump is a perfect fit for a ZK client where maintaining large state is prohibitively expensive.
 
 More specifically, stump consists of roots and the number of leaves (as we know this is the total number of UTXOs). Note that there are differences in how roots are stored and represented compared to the vanilla implementation:
@@ -58,7 +58,7 @@ Also it's worth noting that before "null" was indicating a missing roots whereas
 
 ## Batch proof
 
-Batch inclusion proofs were introduced in the Utreexo paper (see Appendix) and they can reduce the total size of proof(s) significantly But the batch delete algorithm was pretty complex and IO intensive. The pollard scheme streamlined batch deletions and made batch proofs more practical. Pollar batch proof contains all the intermediate nodes that cannot be computed and which are required to eventually calculate the roots (going row by row, left to right, bottom top).
+Batch inclusion proofs were introduced in the Utreexo paper (see Appendix) and they can reduce the total size of proof(s) significantly But the batch delete algorithm was pretty complex and IO intensive. The pollard scheme streamlined batch deletions and made batch proofs more practical. Pollard batch proof contains all the intermediate nodes that cannot be computed and which are required to eventually calculate the roots (going row by row, left to right, bottom top).
 
 <p align="center" width="100%">
   <img src="./img/utreexo_proof.svg" alt=""/>
